@@ -21,6 +21,7 @@ urlpatterns = [
          name='mark-as-done'),
     path('mark-as-pending/<int:id>/', change_todo, {'status': 'P'},
          name='mark-as-pending'),
-    path('edit-details/<int:id>/<str:status>/', views.edit_details,
-         name='edit-details'),
+    path('edit-details/<int:id>/<str:status>/',
+         views.edit_details, name='edit-details'),
+
 ]

@@ -24,5 +24,4 @@ class TODO(models.Model):
     title = models.CharField(max_length=50)
     status = models.CharField(max_length=2, choices=status_choices)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
     priority = models.CharField(max_length=2, choices=priority_choices)

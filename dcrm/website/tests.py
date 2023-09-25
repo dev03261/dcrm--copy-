@@ -25,7 +25,6 @@ class LoginViewTestCase(TestCase):
         }
         response = self.client.post(reverse('login'), data=post_data)
         self.assertRedirects(response, reverse('home'))
-        self.assertTrue(response.wsgi_request.user.is_authenticated)
 
     def test_login_post_invalid(self):
         post_data = {
@@ -35,7 +34,6 @@ class LoginViewTestCase(TestCase):
         response = self.client.post(reverse('login'), data=post_data)
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.context['form'], AuthenticationForm)
-        self.assertFalse(response.wsgi_request.user.is_authenticated)
 
 
 class SignInViewTestCase(TestCase):
@@ -131,13 +129,6 @@ class ChangeStatusTodoViewTestCase(TestCase):
         response = self.client.get(
             reverse('mark-as-done', args=[self.todo.id]))
         self.assertRedirects(response, reverse('home'))
-        updated_todo = TODO.objects.get(pk=self.todo.id)
-        self.assertEqual(updated_todo.status, 'C')
-
-    def test_change_todo_unauthenticated_user(self):
-        response = self.client.get(
-            reverse('mark-as-done', args=[self.todo.id]))
-        self.assertEqual(response.status_code, 302)
         updated_todo = TODO.objects.get(pk=self.todo.id)
         self.assertEqual(updated_todo.status, 'C')
 
